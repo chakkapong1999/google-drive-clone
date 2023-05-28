@@ -1,5 +1,5 @@
 <template>
-    <div class="folder-box" @contextmenu.prevent="handleRightClick($event)">
+    <div class="folder-box" @contextmenu.prevent="handleRightClick($event)" @click="clickFolder">
       <b-icon-folder class="icon"></b-icon-folder>
       {{ markFields(folder.folderName) }}
       <div></div>
@@ -28,6 +28,9 @@ export default {
     handleRightClick (event) {
       this.isRightClick = true
       console.log(event)
+    },
+    clickFolder () {
+      this.$emit('clickFolder', this.folder)
     }
   }
 }

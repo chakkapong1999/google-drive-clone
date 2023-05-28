@@ -25,7 +25,7 @@
     <hr>
     <div class="folder" v-if="folderProps.length > 0">
       <template v-for="(item, index) of folderProps">
-        <FolderComponent :folder="item" :key="index" />
+        <FolderComponent :folder="item" :key="index" @clickFolder="clickFolder"/>
       </template>
     </div>
   </div>
@@ -97,6 +97,9 @@ export default {
         folderPassword: ''
       }
       this.showPassword = false
+    },
+    clickFolder (event) {
+      console.log('clickFolder : ', event)
     }
   }
 }
