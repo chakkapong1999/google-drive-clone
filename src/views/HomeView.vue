@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <div class="button mt-5 mb-5">
-      <button class="btn btn-warning">UPLOAD FILE</button>
+      <button class="btn btn-warning" @click="uploadFile">UPLOAD FILE</button>
       <button class="btn btn-primary" @click="isShowModal = true">CREATE FOLDER</button>
     </div>
     <b-modal centered v-model="isShowModal" title="New Folder" id="create-modal">
@@ -28,6 +28,10 @@
         <FolderComponent :folder="item" :key="index" @clickFolder="clickFolder"/>
       </template>
     </div>
+    <input id="uploadFile" type="file" hidden @change="onFileChange" multiple>
+    <div class="files">
+      Files
+    </div>
   </div>
 </template>
 
@@ -40,6 +44,7 @@ export default {
   },
   data () {
     return {
+      isInsideFolder: false,
       isShowModal: false,
       showPassword: false,
       folder: {
@@ -48,7 +53,8 @@ export default {
         folderStatus: 'active',
         folderOwner: ''
       },
-      folderProps: []
+      folderProps: [],
+      filesArrays: []
     }
   },
   methods: {
@@ -57,27 +63,6 @@ export default {
       this.$bvModal.hide('create-modal')
     },
     createFolder () {
-      const formData = new FormData()
-
-      formData.append('files', 'filesArray')
-      formData.append('payload',
-        JSON.stringify(
-          {
-            folderName: this.folder.folderName,
-            folderOwner: this.folder.folderOwner,
-            folderStatus: this.folder.folderStatus,
-            folderPassword: this.folder.folderPassword
-          }
-        )
-
-      )
-
-      // console.log(this.folderName)
-      // console.log(this.folderPassword)
-      // console.log(this.folderStatus)
-      // console.log(this.folderOwner)
-      console.log(formData)
-
       const folder = {
         folderName: this.folder.folderName,
         folderOwner: this.folder.folderOwner,
@@ -86,7 +71,6 @@ export default {
       }
       this.folderProps.push(folder)
       this.clearTempData()
-
       this.$bvModal.hide('create-modal')
     },
     clearTempData () {
@@ -99,7 +83,36 @@ export default {
       this.showPassword = false
     },
     clickFolder (event) {
+      this.isInsideFolder = true
       console.log('clickFolder : ', event)
+    },
+    uploadFile () {
+      if (!this.isInsideFolder) {
+        alert('cannot upload')
+      } else {
+        document.getElementById('uploadFile').click()
+      }
+    },
+    onFileChange (event) {
+      console.log(event.target.files)
+      this.filesArrays = event.target.files
+      this.prepareData()
+    },
+    prepareData () {
+      const formData = new FormData()
+
+      formData.append('files', this.filesArrays)
+      formData.append('payload',
+        JSON.stringify(
+          {
+            folderName: this.folder.folderName,
+            folderOwner: this.folder.folderOwner,
+            folderStatus: this.folder.folderStatus,
+            folderPassword: this.folder.folderPassword
+          }
+        )
+      )
+      console.log(formData)
     }
   }
 }
@@ -143,5 +156,12 @@ export default {
   justify-content: center;
   gap: 2rem;
   padding: 1rem 5rem 2rem 5rem;
+}
+
+.files {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
 }
 </style>
