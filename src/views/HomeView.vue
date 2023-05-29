@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <div class="button mt-5 mb-5">
-      <button class="btn btn-warning" @click="uploadFile">UPLOAD FILE</button>
+      <!-- <button class="btn btn-warning" @click="uploadFile">UPLOAD FILE</button> -->
       <button class="btn btn-primary" @click="isShowModal = true">CREATE FOLDER</button>
     </div>
     <b-modal centered v-model="isShowModal" title="New Folder" id="create-modal">
@@ -28,9 +28,20 @@
         <FolderComponent :folder="item" :key="index" @clickFolder="clickFolder"/>
       </template>
     </div>
-    <input id="uploadFile" type="file" hidden @change="onFileChange" multiple>
-    <div class="files">
-      Files
+    <div class="files" v-if="isInsideFolder">
+      <div class="drop-file" @drop="drop" @dragover="dragover" @dragleave="dragleave">
+        <input id="uploadFile" ref="file" type="file" @change="onFileChange" multiple hidden>
+        <div class="upload-box" @click="uploadFile">
+          <div>
+            Drag and Drop files here or
+          <span style="text-decoration: underline;"> Click here </span>
+          to upload your files
+          </div>
+          <div>
+            <b-icon-upload scale="3" class="mt-5" />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -93,9 +104,9 @@ export default {
         document.getElementById('uploadFile').click()
       }
     },
-    onFileChange (event) {
-      console.log(event.target.files)
-      this.filesArrays = event.target.files
+    onFileChange () {
+      this.filesArrays = [...this.$refs.file.files]
+      console.log(this.filesArrays)
       this.prepareData()
     },
     prepareData () {
@@ -112,16 +123,26 @@ export default {
           }
         )
       )
-      console.log(formData)
+    },
+    drop (event) {
+      event.preventDefault()
+      this.$refs.file.files = event.dataTransfer.files
+      this.onFileChange()
+    },
+    dragleave (event) {
+      event.preventDefault()
+    },
+    dragover (event) {
+      event.preventDefault()
     }
   }
 }
 </script>
 
 <style scoped>
-#home {
+/* #home {
   height: 100vh;
-}
+} */
 
 .button {
   display: flex;
@@ -137,19 +158,6 @@ export default {
   width: 100%;
 }
 
-.ok-button {
-  height: 42px;
-  /* margin-top: 0.5rem; */
-  margin-bottom: 4px;
-  color: white;
-  background-color: #4ba659;
-  border-color: #4ba659;
-  width: 100%;
-  display: grid;
-  justify-self: center;
-  text-align: center;
-}
-
 .folder {
   display: flex;
   flex-wrap: wrap;
@@ -163,5 +171,25 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
+}
+.drop-file {
+  width: 50%;
+  height: 20rem;
+  border: 2px dashed black;
+  display: grid;
+  place-items: center;
+  justify-content: center;
+  text-align: center;
+  word-wrap: break-word;
+}
+#uploadFile {
+  width: 100%;
+  height: 100%;
+}
+.upload-box {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  column-gap: 2rem;
 }
 </style>
