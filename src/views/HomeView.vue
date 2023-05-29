@@ -28,6 +28,13 @@
         <FolderComponent :folder="item" :key="index" @clickFolder="clickFolder"/>
       </template>
     </div>
+    <div class="display-file-box">
+      <template v-for="(file, index) in filesArrays">
+        <div class="display-file-item" :key="file.name + index">
+          <span>{{ markFields(file.name, 20) }}</span>
+        </div>
+      </template>
+    </div>
     <div class="files" v-if="isInsideFolder">
       <div class="drop-file" @drop="drop" @dragover="dragover" @dragleave="dragleave">
         <input id="uploadFile" ref="file" type="file" @change="onFileChange" multiple hidden>
@@ -48,6 +55,7 @@
 
 <script>
 import FolderComponent from '@/components/FolderComponent.vue'
+import { markFields } from '@/utils'
 export default {
   name: 'HomeView',
   components: {
@@ -69,6 +77,7 @@ export default {
     }
   },
   methods: {
+    markFields,
     cancel () {
       this.clearTempData()
       this.$bvModal.hide('create-modal')
@@ -140,9 +149,9 @@ export default {
 </script>
 
 <style scoped>
-/* #home {
-  height: 100vh;
-} */
+#home {
+  padding-bottom: 1rem;
+}
 
 .button {
   display: flex;
@@ -171,16 +180,17 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
+  padding: 1rem;
 }
 .drop-file {
-  width: 50%;
-  height: 20rem;
+  min-height: 20rem;
   border: 2px dashed black;
   display: grid;
   place-items: center;
   justify-content: center;
   text-align: center;
   word-wrap: break-word;
+  padding: 1rem;
 }
 #uploadFile {
   width: 100%;
@@ -191,5 +201,23 @@ export default {
   display: flex;
   flex-direction: column;
   column-gap: 2rem;
+}
+.display-file-box {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  /* flex-direction: column; */
+  place-items: center;
+  padding: 1rem;
+  text-align: center;
+  gap: 1rem;
+}
+.display-file-item {
+  width: 12rem;
+  height: 12rem;
+  border: 1px solid rgb(161, 156, 156);
+  padding: 0.5rem;
+  border-radius: 5px;
+  background-color: rgb(238, 238, 238);
 }
 </style>

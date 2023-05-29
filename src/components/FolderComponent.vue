@@ -1,12 +1,13 @@
 <template>
     <div class="folder-box" @contextmenu.prevent="handleRightClick($event)" @click="clickFolder">
       <b-icon-folder class="icon"></b-icon-folder>
-      {{ markFields(folder.folderName) }}
+      {{ markFields(folder.folderName, 12) }}
       <div></div>
     </div>
 </template>
 
 <script>
+import { markFields } from '@/utils'
 export default {
   name: 'FolderComponent',
   props: {
@@ -18,13 +19,7 @@ export default {
     }
   },
   methods: {
-    markFields (text) {
-      const MAX_LENGTH = 12
-      if (text.length > MAX_LENGTH) {
-        return text.substring(0, MAX_LENGTH) + '...'
-      }
-      return text
-    },
+    markFields,
     handleRightClick (event) {
       this.isRightClick = true
       console.log(event)
