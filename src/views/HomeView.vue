@@ -30,9 +30,7 @@
     </div>
     <div class="display-file-box">
       <template v-for="(file, index) in filesArrays">
-        <div class="display-file-item" :key="file.name + index">
-          <span>{{ markFields(file.name, 20) }}</span>
-        </div>
+        <DisplayFileComponent :file="file" :key="index"/>
       </template>
     </div>
     <div class="files" v-if="isInsideFolder">
@@ -40,9 +38,7 @@
         <input id="uploadFile" ref="file" type="file" @change="onFileChange" multiple hidden>
         <div class="upload-box" @click="uploadFile">
           <div>
-            Drag and Drop files here or
-          <span style="text-decoration: underline;"> Click here </span>
-          to upload your files
+            Drag and Drop files here or<span style="text-decoration: underline;"> Click here </span>to upload your files
           </div>
           <div>
             <b-icon-upload scale="3" class="mt-5" />
@@ -55,11 +51,13 @@
 
 <script>
 import FolderComponent from '@/components/FolderComponent.vue'
-import { markFields } from '@/utils'
+import DisplayFileComponent from '@/components/DisplayFileComponent.vue'
+import { markFields, successToast } from '@/utils'
 export default {
   name: 'HomeView',
   components: {
-    FolderComponent
+    FolderComponent,
+    DisplayFileComponent
   },
   data () {
     return {
@@ -78,6 +76,7 @@ export default {
   },
   methods: {
     markFields,
+    successToast,
     cancel () {
       this.clearTempData()
       this.$bvModal.hide('create-modal')
@@ -211,13 +210,5 @@ export default {
   padding: 1rem;
   text-align: center;
   gap: 1rem;
-}
-.display-file-item {
-  width: 12rem;
-  height: 12rem;
-  border: 1px solid rgb(161, 156, 156);
-  padding: 0.5rem;
-  border-radius: 5px;
-  background-color: rgb(238, 238, 238);
 }
 </style>
