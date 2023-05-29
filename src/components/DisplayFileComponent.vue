@@ -26,5 +26,6 @@ export default {
   padding: 0.5rem;
   border-radius: 5px;
   background-color: rgb(238, 238, 238);
+  word-wrap: break-word;
 }
 </style>
