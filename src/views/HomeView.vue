@@ -41,7 +41,7 @@
             Drag and Drop files here or<span style="text-decoration: underline;"> Click here </span>to upload your files
           </div>
           <div>
-            <b-icon-upload scale="3" class="mt-5" />
+            <b-icon-upload scale="2" class="mt-5" />
           </div>
         </div>
       </div>
