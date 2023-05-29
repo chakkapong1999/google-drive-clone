@@ -1,6 +1,6 @@
 <template>
     <div class="display-file-item">
-        <span>{{ markFields(file.name, 20) }}</span>
+        <span>{{ markFields(file.name, 18) }}</span>
     </div>
 </template>
 
