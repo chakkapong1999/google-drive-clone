@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { system } from './modules/system'
+import { system } from './modules'
 
 Vue.use(Vuex)
 
