@@ -7,8 +7,13 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+import { isEmpty } from 'lodash'
+import { api } from '@/services/modules'
 
 Vue.config.productionTip = false
+
+Vue.prototype.$api = api
+Vue.prototype.$isEmpty = isEmpty
 
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)

@@ -15,3 +15,8 @@ export const uploadAndCreateFolder = async (payload) => {
 export const getFiles = async (payload) => {
   return await client.post(SERVICE_GET_GILES, { ...payload })
 }
+
+export const googleDriveService = {
+  uploadAndCreateFolder,
+  getFiles
+}

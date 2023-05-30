@@ -74,6 +74,12 @@ export default {
       filesArrays: []
     }
   },
+  async created () {
+    const response = await this.$api.getFiles({
+      owner: 'Test'
+    })
+    console.log(response)
+  },
   methods: {
     markFields,
     successToast,
