@@ -3,7 +3,7 @@
     <div class="file-header">
       <!-- <b-icon-file-pdf/> -->
       <div></div>
-      <span>{{ markFields(file.name, 18) }}</span>
+      <span>{{ markFields(file.name, 20) }}</span>
       <div class="list-icon">
         <b-icon-list scale="1.5" />
       </div>
@@ -53,7 +53,7 @@ img {
 }
 .file-header {
   display: grid;
-  grid-template-columns: 0.5fr 1fr 0.5fr;
+  grid-template-columns: 10% 75% 15%;
   justify-content: center;
 }
 .list-icon {

@@ -118,25 +118,20 @@ export default {
         document.getElementById('uploadFile').click()
       }
     },
-    onFileChange () {
+    async onFileChange () {
       this.filesArrays = [...this.$refs.file.files]
-      console.log(this.filesArrays)
-      this.prepareData()
-    },
-    prepareData () {
-      const formData = new FormData()
 
-      formData.append('files', this.filesArrays)
-      formData.append('payload',
-        JSON.stringify(
-          {
-            folderName: this.folder.folderName,
-            folderOwner: this.folder.folderOwner,
-            folderStatus: this.folder.folderStatus,
-            folderPassword: this.folder.folderPassword
-          }
-        )
-      )
+      const formData = new FormData()
+      for (let i = 0; i < this.filesArrays.length; i++) {
+        const file = this.filesArrays[i]
+        formData.append('files', file)
+      }
+
+      console.log('onFileChange')
+
+      // const response = await this.$api.uploadFiles(formData)
+
+      // console.log(response)
     },
     drop (event) {
       event.preventDefault()

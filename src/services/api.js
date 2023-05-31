@@ -10,18 +10,19 @@ export default class Services {
       timeout
     })
 
-    client.interceptors.request.use(this.handleRequest, this.handleError)
+    // client.interceptors.request.use(this.handleRequest, this.handleError)
     client.interceptors.response.use(this.handleSuccess, this.handleError)
     this.client = client
   }
 
-  handleRequest (config) {
-    config.headers = {
-      language: 'TH',
-      sid: '12345'
-    }
-    return config
-  }
+  // handleRequest (config) {
+  //   config.headers = {
+  //     language: 'TH',
+  //     sid: '12345'
+  //   }
+  //   config.headers['Content-Type'] = undefined
+  //   return config
+  // }
 
   handleSuccess (response) {
     if (response.data) {
