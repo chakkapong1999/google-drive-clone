@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <div class="button mt-5 mb-5">
+    <div class="button">
       <!-- <button class="btn btn-warning" @click="uploadFile">UPLOAD FILE</button> -->
       <button class="btn btn-primary" @click="isShowModal = true">CREATE FOLDER</button>
     </div>
@@ -50,9 +50,11 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
 import FolderComponent from '@/components/FolderComponent.vue'
 import DisplayFileComponent from '@/components/DisplayFileComponent.vue'
 import { markFields, successToast } from '@/utils'
+const { mapActions: mapSystemActions } = createNamespacedHelpers('system')
 export default {
   name: 'HomeView',
   components: {
@@ -77,6 +79,10 @@ export default {
   methods: {
     markFields,
     successToast,
+    ...mapSystemActions({
+      setOpenSpinner: 'setOpenSpinner',
+      setCloseSpinner: 'setCloseSpinner'
+    }),
     async callData () {
       const response = await this.$api.getFiles({
         owner: 'Test'
@@ -97,6 +103,7 @@ export default {
       this.folderProps.push(folder)
       this.clearTempData()
       this.$bvModal.hide('create-modal')
+      this.setOpenSpinner()
     },
     clearTempData () {
       this.folder = {
@@ -150,7 +157,7 @@ export default {
 
 <style scoped>
 #home {
-  padding-bottom: 1rem;
+  padding: 1rem;
 }
 
 .button {
