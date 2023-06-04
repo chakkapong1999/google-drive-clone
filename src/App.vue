@@ -16,6 +16,10 @@ export default {
     ...mapSystemState({
       isSpenSpinner: state => state.isOpenSpinner
     })
+  },
+  beforeCreate () {
+    // const favicon = document.getElementById('favicon')
+    // favicon.href = 'https://w7.pngwing.com/pngs/922/746/png-transparent-google-drive-google-drive-google-logo-google-docs-google-angle-text-logo-thumbnail.png'
   }
 }
 </script>
