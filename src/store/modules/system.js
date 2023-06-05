@@ -11,8 +11,8 @@ const actions = {
   setOpenSpinner: ({ commit }) => {
     commit('SET_OPEN_SPINNER', true)
   },
-  SET_CLOSE_SPINNER: ({ commit }) => {
-    commit('SET_CLOSE_SPINNER', false)
+  setCloseSpinner: ({ commit }) => {
+    commit('SET_OPEN_SPINNER', false)
   }
 }
 

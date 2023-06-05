@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="back-drop" v-if="isSpenSpinner">
+    <div class="back-drop" v-if="isOpenSpinner">
       <span class="loader"></span>
     </div>
     <router-view />
@@ -14,7 +14,7 @@ export default {
   name: 'App',
   computed: {
     ...mapSystemState({
-      isSpenSpinner: state => state.isOpenSpinner
+      isOpenSpinner: state => state.isOpenSpinner
     })
   },
   beforeCreate () {

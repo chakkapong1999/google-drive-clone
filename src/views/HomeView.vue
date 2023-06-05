@@ -70,11 +70,15 @@ export default {
         folderName: '',
         folderPassword: '',
         folderStatus: 'active',
-        folderOwner: ''
+        folderOwner: '',
+        folderID: ''
       },
       folderProps: [],
       filesArrays: []
     }
+  },
+  created () {
+    this.callData()
   },
   methods: {
     markFields,
@@ -84,10 +88,15 @@ export default {
       setCloseSpinner: 'setCloseSpinner'
     }),
     async callData () {
+      await this.setOpenSpinner()
       const response = await this.$api.getFiles({
         owner: 'Test'
       })
-      console.log(response)
+      if (response.status === 'success') {
+        this.folder = response.result
+      }
+      console.log(this.folder)
+      await this.setCloseSpinner()
     },
     cancel () {
       this.clearTempData()
@@ -103,7 +112,7 @@ export default {
       this.folderProps.push(folder)
       this.clearTempData()
       this.$bvModal.hide('create-modal')
-      this.setOpenSpinner()
+      // this.setOpenSpinner()
     },
     clearTempData () {
       this.folder = {
@@ -126,7 +135,8 @@ export default {
       }
     },
     async onFileChange () {
-      this.filesArrays = [...this.$refs.file.files]
+      // this.filesArrays = [...this.$refs.file.files]
+      this.filesArrays.push(...this.$refs.file.files)
 
       const formData = new FormData()
       for (let i = 0; i < this.filesArrays.length; i++) {
